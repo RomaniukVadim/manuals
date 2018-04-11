@@ -1,0 +1,345 @@
+#+TITLE: LPIC-201
+#+AUTHOR: Mobius
+#+EMAIL: amalinov30@gmail.com
+#+DATE: 2017-06-15
+
+Where is a bottle neck?
+* Memory usage
+  + Where is a bottle neck?
+** Tools
+*** vmstat
+*** free -m
+*** top
+**** In top press 1 to see all cpu
+*** stress
+* Monitoring Disk I/O
+** Tools
+*** uptime (system load)
+*** stress --hdd 1
+*** iotop
+*** iostat (sysstat package)
+*** sar 1 5 (sysstat package)
+*** lsof
+* Monitoring Network I/O
+** Tools
+*** netstat -ie (or ifconfig) -> interfaces
+*** netstat -s -> stats
+*** netstat -tuna -> useful info!
+*** iftop -> track down troublemakers
+*** nload -> graph bandwidth
+* Measuring Bandwidth
+** Tools
+*** speedtest-cli
+*** iperf
+* Monitoring Data Trends
+** Tools
+*** collectd (/etc/collectd.conf) + frontend collectd-web
+* Kernel Components
+** Version Numbering
+*** 1.6.3.14 (version.major revision. minor revision. correctin patches)
+* Manipulating Kernel Modules
+** Commands
+*** /lib/modules/*kernel*/
+*** lsmod, insmod (need full path), rmmod, modprobes, depmod -a, modinfo
+* Kernel Automation and Configuration
+** /proc/sys/kernel/ <--> sysctl.conf, /etc/modprobe.d/
+** lsdev (emerge procinfo), lspci, lsusb
+** udevmonitor (old way), udevadm [monitor] (new way), dmesg, sysctl -a,-w
+* Compiling The Kernel
+** Go to kernel.org, download kernel
+** cd /usr/src/; tar -Jxvf ~/Downloads/*some folder*/; ln -s linux-*.*.* linux; cd linux; install base-devel, ncurses-devel, qt-devel;
+** make help 
+Cleaning targets:
+  clean		  - Remove most generated files but keep the config and
+                    enough build support to build external modules
+  mrproper	  - Remove all generated files + config + various backup files
+  distclean	  - mrproper + remove editor backup and patch files
+
+Configuration targets:
+  config	  - Update current config utilising a line-oriented program
+  nconfig         - Update current config utilising a ncurses menu based
+                    program
+  menuconfig	  - Update current config utilising a menu based program
+  xconfig	  - Update current config utilising a Qt based front-end
+  gconfig	  - Update current config utilising a GTK+ based front-end
+  oldconfig	  - Update current config utilising a provided .config as base
+  localmodconfig  - Update current config disabling modules not loaded
+  localyesconfig  - Update current config converting local mods to core
+  silentoldconfig - Same as oldconfig, but quietly, additionally update deps
+  defconfig	  - New config with default from ARCH supplied defconfig
+  savedefconfig   - Save current config as ./defconfig (minimal config)
+  allnoconfig	  - New config where all options are answered with no
+  allyesconfig	  - New config where all options are accepted with yes
+  allmodconfig	  - New config selecting modules when possible
+  alldefconfig    - New config with all symbols set to default
+  randconfig	  - New config with random answer to all options
+  listnewconfig   - List new options
+  olddefconfig	  - Same as silentoldconfig but sets new symbols to their
+                    default value
+  kvmconfig	  - Enable additional options for kvm guest kernel support
+  xenconfig       - Enable additional options for xen dom0 and guest kernel support
+  tinyconfig	  - Configure the tiniest possible kernel
+
+Other generic targets:
+  all		  - Build all targets marked with [*]
+  vmlinux	  - Build the bare kernel
+  modules	  - Build all modules
+  modules_install - Install all modules to INSTALL_MOD_PATH (default: /)
+  firmware_install- Install all firmware to INSTALL_FW_PATH
+                    (default: $(INSTALL_MOD_PATH)/lib/firmware)
+  dir/            - Build all files in dir and below
+  dir/file.[ois]  - Build specified target only
+  dir/file.lst    - Build specified mixed source/assembly target only
+                    (requires a recent binutils and recent build (System.map))
+  dir/file.ko     - Build module including final link
+  modules_prepare - Set up for building external modules
+  tags/TAGS	  - Generate tags file for editors
+  cscope	  - Generate cscope index
+  gtags           - Generate GNU GLOBAL index
+  kernelrelease	  - Output the release version string (use with make -s)
+  kernelversion	  - Output the version stored in Makefile (use with make -s)
+  image_name	  - Output the image name (use with make -s)
+  headers_install - Install sanitised kernel headers to INSTALL_HDR_PATH
+                    (default: ./usr)
+
+Static analysers
+  checkstack      - Generate a list of stack hogs
+  namespacecheck  - Name space analysis on compiled kernel
+  versioncheck    - Sanity check on version.h usage
+  includecheck    - Check for duplicate included header files
+  export_report   - List the usages of all exported symbols
+  headers_check   - Sanity check on exported headers
+  headerdep       - Detect inclusion cycles in headers
+  coccicheck      - Check with Coccinelle.
+
+Kernel selftest
+  kselftest       - Build and run kernel selftest (run as root)
+                    Build, install, and boot kernel before
+                    running kselftest on it
+  kselftest-clean - Remove all generated kselftest files
+  kselftest-merge - Merge all the config dependencies of kselftest to existed
+                    .config.
+
+Kernel packaging:
+  rpm-pkg             - Build both source and binary RPM kernel packages
+  binrpm-pkg          - Build only the binary kernel RPM package
+  deb-pkg             - Build both source and binary deb kernel packages
+  bindeb-pkg          - Build only the binary kernel deb package
+  tar-pkg             - Build the kernel as an uncompressed tarball
+  targz-pkg           - Build the kernel as a gzip compressed tarball
+  tarbz2-pkg          - Build the kernel as a bzip2 compressed tarball
+  tarxz-pkg           - Build the kernel as a xz compressed tarball
+  perf-tar-src-pkg    - Build perf-4.9.18-1.tar source tarball
+  perf-targz-src-pkg  - Build perf-4.9.18-1.tar.gz source tarball
+  perf-tarbz2-src-pkg - Build perf-4.9.18-1.tar.bz2 source tarball
+  perf-tarxz-src-pkg  - Build perf-4.9.18-1.tar.xz source tarball
+
+Documentation targets:
+ Linux kernel internal documentation in different formats (Sphinx):
+  htmldocs        - HTML
+  latexdocs       - LaTeX
+  pdfdocs         - PDF
+  epubdocs        - EPUB
+  xmldocs         - XML
+  cleandocs       - clean all generated files
+
+  make SPHINXDIRS="s1 s2" [target] Generate only docs of folder s1, s2
+  valid values for SPHINXDIRS are: development-process media gpu 80211
+
+  make SPHINX_CONF={conf-file} [target] use *additional* sphinx-build
+  configuration. This is e.g. useful to build with nit-picking config.
+
+ Linux kernel internal documentation in different formats (DocBook):
+  htmldocs        - HTML
+  pdfdocs         - PDF
+  psdocs          - Postscript
+  xmldocs         - XML DocBook
+  mandocs         - man pages
+  installmandocs  - install man pages generated by mandocs
+  cleandocs       - clean all generated DocBook files
+
+  make DOCBOOKS="s1.xml s2.xml" [target] Generate only docs s1.xml s2.xml
+  valid values for DOCBOOKS are: z8530book.xml kernel-hacking.xml kernel-locking.xml deviceiobook.xml writing_usb_driver.xml networking.xml kernel-api.xml filesystems.xml lsm.xml usb.xml kgdb.xml gadget.xml libata.xml mtdnand.xml librs.xml rapidio.xml genericirq.xml s390-drivers.xml uio-howto.xml scsi.xml debugobjects.xml sh.xml regulator.xml alsa-driver-api.xml writing-an-alsa-driver.xml tracepoint.xml w1.xml writing_musb_glue_layer.xml crypto-API.xml iio.xml
+
+  make DOCBOOKS="" [target] Don't generate docs from Docbook
+     This is useful to generate only the ReST docs (Sphinx)
+
+     Architecture specific targets (x86):
+  bzImage      - Compressed kernel image (arch/x86/boot/bzImage)
+  install      - Install kernel using
+                  (your) ~/bin/installkernel or
+                  (distribution) /sbin/installkernel or
+                  install to $(INSTALL_PATH) and run lilo
+  fdimage      - Create 1.4MB boot floppy image (arch/x86/boot/fdimage)
+  fdimage144   - Create 1.4MB boot floppy image (arch/x86/boot/fdimage)
+  fdimage288   - Create 2.8MB boot floppy image (arch/x86/boot/fdimage)
+  isoimage     - Create a boot CD-ROM image (arch/x86/boot/image.iso)
+                  bzdisk/fdimage*/isoimage also accept:
+                  FDARGS="..."  arguments for the booted kernel
+                  FDINITRD=file initrd for the booted kernel
+
+  i386_defconfig           - Build for i386
+  x86_64_defconfig         - Build for x86_64
+
+  make V=0|1 [targets] 0 => quiet build (default), 1 => verbose build
+  make V=2   [targets] 2 => give reason for rebuild of target
+  make O=dir [targets] Locate all output files in "dir", including .config
+  make C=1   [targets] Check all c source with $CHECK (sparse by default)
+  make C=2   [targets] Force check of all c source with $CHECK
+  make RECORDMCOUNT_WARN=1 [targets] Warn about ignored mcount sections
+  make W=n   [targets] Enable extra gcc checks, n=1,2,3 where
+		1: warnings which may be relevant and do not occur too often
+		2: warnings which occur quite often but may still be relevant
+		3: more obscure warnings, can most likely be ignored
+		Multiple levels can be combined with W=12 or W=123
+
+Execute "make" or "make all" to build all targets marked with [*] 
+For further info see the ./README file
+** make mrproper; make xconfig; (make oldconfig - pull the configuration from the currently running system); make bzImage; make modules; make install;
+* SystemV Runlevels
+** /etc/inittab
+** Runlevel
+   1. 0 -halt
+   2. 1 - Single user mode
+   3. 2 - Multiuser, without NFS
+   4. 3 - Full multiuser mode
+   5. 4 - unused
+   6. 5 - X11
+   7. 6 - reboot
+** telinit 3
+* SystemV Init Script
+** chkconfig
+** update-rc.d
+** /etc/init.d/, /etc/rc.d
+* Upstart
+** /etc/init - upstart configs
+* SystemD
+** systemctl start, restart, enable, disable, reload, list-unit-files
+** /usr/lib/systemd/system
+* Repairing Corrupt Legacy GRUB Bootloader
+** Corrupt hard drive might need bootable repair CD/USB
+** grub> root  -- first set root
+** grub> kernel /vmlinuz-2.6.18-390.e15 root=/dev/sda2 -- set kernel
+** grub> initrd /initrd-2.6.18-406
+** grub> boot
+* GRUB2 Recovery
+** grub> ls -- what partition on system
+** grub> ls (hd0,1)/boot/ -- Tab
+** grub> set
+** grub> set root=(hd0,0)
+** grub> linux /boot/vmlinuz-3.19.0-25-generic root=/dev/sda1
+** grub> initrd /boot/initrd.img-3.19.0-25-generic
+** grub> boot
+* Alternate Bootloaders
+** LILO
+*** Live exactly in a boot sector, /etc/lilo.conf - config
+*** syslinux, msdos partition, usually usb
+*** extlinux, msdos or ext2/3/4 often hard drive
+*** isolinux, cdrom isolinux.bin isolinux.cfg, creates .iso file
+* Booting with pxelinux
+** nano dhcp.conf; dhcp-boot=pxelinux.0,pookie,192.168.0.5
+** Network boot linux
+** /var/lib/tftpboot/
+** pxelinux.0
+** pxelinux.cfg - default
+** menu
+** kernel
+** initramfs
+* Linux SWAP
+** swapon
+** dd if=/dev/zero of=/swapfile bs=1M count=128
+** mkswap swapfile
+** swapon swapfile
+** chmod 0600 swapfile
+** swapoff /dev/sda2
+* Mounting Partitions
+** mount -t ext4 /dev/sdb1 /mnt/5G/
+** mount
+** umount /mnt/5G/
+** /etc/fstab
+** blkid
+* Maintaining EXT Filesystems
+** fsck -f -y /dev/sdb1
+** tune2fs -l /dev/sdb1
+** tune2fs -L 5_GIGGER /dev/sdb1 -- change lable
+** tune2fs -i 10 /dev/sdb1 -- check interval
+* Ext Filesystem Corruption
+** dumpe2fs /dev/sda1
+** sudo dumpe2fs /dev/sda1 | grep superblock  -- where file is
+** sudo debugfs /dev/sda1
+** fsck /dev/sdb1
+** mkfs.ext4 -n /dev/sdb1 -- no really, just watch where superblocks stored
+** fsck -b 98304 /dev/sdb1 -- other superblock
+* XFS Filesystem
+** Redhat/CentOS
+** Not EXT compatible
+* S.M.A.R.T (Self Monitoring Analysis Reporting Technology)
+** smartctl, example: smartctl --test=short /dev/sda
+** smartd
+** emerge smartmontools
+** nano /etc/default/smartmontools
+* AutoFS
+** /etc/auto.master
+** /etc/auto.nfs/.smb
+* CDROM Filesystems
+** iso9660 / UDF
+** mkdisofs --help
+* Using RAID
+** RAID0 -> increase disk size , if lose drive - lose data
+** RAID1 -> Do a backup (mirror disk)
+** RAID5 -> magical drive (can lose 1 drive without losing data)
+** RAID6 -> can lose 2 drive without losing data
+** cat /proc/mdstat
+** ls /dev/sd*
+** fdisk /dev/sdb
+*** n,p,..., t , fd (RAID partition), w
+** mdadm  --create --verbose /dev/md0 --level=1  --raid-devices=2 /dev/sdb1 /dev/sdc1
+** ls /dev/md*
+** mdadm --detail --scan
+* Tuning Hard Drives
+** hdparm, sdparm
+** tune2fs
+** sysctl
+* ISCSI
+* LVM
+** Physical volumes
+** volume groups
+** logical volumes
+** lvdisplay, lvcreate --name tinyslice --size 1G bigdatachunk, lvextend
+* Configure Wired Network Device
+** ifconfig -a
+** ifconfig eth0 up
+** ip addr
+** ifconfig eth0 192.168.1.183
+** ifconfig eth0 netmask 255.255.255.0
+** route
+** route add default gw 192.168.1.1 eth0
+** arp -a
+** iwlist wlan0 scan
+** iwconfig wlan0 essid GUEST
+** dhclient wlan0
+* Network Troubleshooting
+** ifconfig eth0:0 192.168.1.183
+** netstat -tuna
+** nmap 192.168.1.215
+** configure firewall
+* Compile and Install from Source
+** ./configure, make, make install
+* Backing Up Server
+** *Do Backup* : /etc/ /var/spool/ /home/ /usr/local
+** *Don't Backup*: /usr/
+** *Maybe*: /var/lib/ /var/log/ /opt/
+** Backup Packages: Amanda, Bacula, BackupPc
+** Tape: /dev/st0, /dev/nst0, /usr/bit/mt
+** rsync -av Documents/ Docbackup/ -- copy only doesn't existed files
+** rsync -av Documents/ root@192.168.0.203:/root/
+** * 
+* System Notifications
+** echo "System will go down." | wall
+** Network users: /etc/issue.net (/etc/ssh/sshd_config and uncoment string  Banner /etc/issue.net)
+*** must edit /etc/ssh/sshd_config
+*** \d = date
+*** \t = time
+*** \n = node (hostname)
+*** \u = # of users
+** Local users: /etc/issue

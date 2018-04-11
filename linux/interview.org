@@ -1,0 +1,74 @@
+#+TITLE: INTERVIEW Q&A
+#+AUTHOR: mobius
+#+EMAIL: amalinov30@gmail.com
+#+DATE: 08-08-2017
+
+* Unix (Linux) Questions
+** How to check kernel version?
+   uname -a
+** How to check current ip address?
+   ifconfig (new way)
+   ip addr show eth0 (old way)
+** How do you check for free disk space?
+   df -ah
+** How do you manage services on a system?
+   /etc/init.d/service status/start/stop
+   service udev status/start/stop
+   systemctl status/start/stop udev
+** How would you check the size of a directory'ss contents on disk?
+   du -sh
+** How would you check for open ports on a Linux machine?
+  netstat -tulpn 
+** How do you check CPU usage for a process?
+   ps -aux | grep nginx
+   top or htop
+** Dealing with mount
+   mount /dev/sda /mnt
+   mount
+   less /etc/fstab
+** How do you look up something you don't know?
+   man
+* Networking
+** What is Firewall?
+ Firewall prevents connection between two or multiple sources; it basiclly blocks any incoming or outgoing traffic.Firewalls can be in hardware or software.
+** What is TCP/IP?
+ TCP is a Transmission Control Protocol that deals with establishing a connection between computers befor any data is being sent; in other words it ct as the highway for data packets being sent back and forth used by various Protocols like HTTP or FTP.TCP also sorts out data packet receive order.
+** Can you explain the difference between HTTP and HTTPS?
+ HTTP stands for HyperText Transfer Protocol used by majority of websites as means of transmitting website data and it allows for use of hyperlinks. This Protocol is mostly uses TCP port 80
+ HTTPS is a secure version of HTTP that allows for identity verification and low level encription used port 443.
+** What is a proxy or proxy server?
+ Proxy dels with filtering network traffic in a sense of preventing access to certain  websites and can even monitor user web activity. To put it simply, it can block certain website from being accessed but, it can block certain website from being accessed but it can also act as a measure of hiding the true origin in point of access.
+** Can you explain what UDP 
+ UDP stands for User Datagram Protocol. Unlike TCP, UDP is constantly broadcasting a connection signal which can allow for faster connection speeds-with TCP you have to wait for connection confirmation which takes time. UDP sends out data without consideration of what is receiving it; sort of like Radio signal.
+** What is loopback IP 
+ The loopback IP address is 127.0.0.1. As part of troubleshooting network connections issues; It is used to tost Network Interface Card for functionality. If you ping this ip address and it completes successfully it meanns you hardware is okay.
+** What is DHCP?
+ DHCP stands for Dynamic Host Configuration Protocol. The main function of DHCP is to handle distribution of IP address on a network. IP addresss assigned by DHCP server is "Dynamic", meaning that they are leased and released dynamically. To explain it further, if you connect a PC to a network it will get a leased IP address and if you disconnected or move the PC -it will be assigned a different one.
+** What is FTP/ and port used?
+ FTP is a File Transfer Protocol used to transfer large files between computers with built in ability to pause transfer of data. Ports used by FTP are 20 and 21.
+** What is SSH/ and port used?
+ Also known as Secure Shell; is used to establish a secure connection between devices which can be anything from computers to switches. For example; you can use SSH at a cafe and connect to any device anywhere; by establishing a configured Secure Shell tunnel between two devices. Making the connection secure...
+** What is the maximum lenght of UTP cable allowed?
+ The maximum lenght of UTP is 90 to 100 meters for a single segment connection. If you have a switch or a repeater it can compensate for this limitation.
+** What are the layers of OSI model and how many?
+ There are 7 rayecn oy OSI model: Physical Layer, Data Link, Network, Transport, Session, Presentation and Application.
+** What is the job of Network Layer?
+ A text book answer for this question is:
+ The Network Layer deals with routing, switching and transmitting of data from one point to another, but this layer is also responsible for error handling and packet sequencing.
+** What is Subnet Mask?
+ SUbnet Mask dictates the size of a netwoork and also tells which part of the subnet our host IP address belongs to. Basically you can have multiple sub networks for given IP address range.
+** Can you tell me the difference between a Workgroup and a Domain?
+ With a Workgroup you have a collection of systems that are connected to the same network but have their own set of rusel and permission set at local level. With a Domain you have a group of systems that are bound by the rules of centralized outhentication server. In a Domain each system has to connect through the Domain server using provided credentials.
+** How would you determine connection path between local host and a server?
+ A "traceroute" command is used to accomplish this test. Similar to "ping" command with addition of letting us visualize which routers or switches are used to connect in reaching of our destination (TTL increasing by one). Used for troubleshooting dead connections.
+** Can you explain IFCONFIG?
+ Ifconfig command is used to determine TCP/IP setting DHCP configuration, DNS, Default Gateway, and subnet mask. Can also switch staate of device. (up/down)
+** What is VPN?
+ A Virtual Private Network allows users to cerate a secure connetcion over public network such as internet. This is commonly used by mobile workers in order to access company's network from remote locations.
+* C Questions
+** 
+* MIPS/Intel Questions
+** Intel
+*** 
+** MIPS
+*** 

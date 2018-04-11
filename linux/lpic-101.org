@@ -1,0 +1,63 @@
+#+TITLE: LPIC-1
+#+AUTHOR: Mobius
+#+EMAIL: amalinov30@gmail.com
+#+DATE: 2017-11-07
+
+
+* Nice level (change priority)
+** Default Priority - 0 (zero)
+** Lower           Higher
+** <--------------------->
+** -19        0         19
+** nice -15 sleep 22222 & (lower priority)
+** nice --16 sleep 1111 & (higher priority, need root access)
+** change levels "renice 20 -p PID"
+** users can only RAISE nice levels!
+* Regular Expression with Grep, Egrep & Fgrep
+** Grep - searches for text, return line if found; handles basic regular expression
+** grep pattern file or cat file | grep pattern
+** Regexp ^ - beginning, $ - end, . - any char
+** Egrep (P|p) - big or small letter, [a-z] - any of range
+* GPT and MBR
+** MBR (Master Boot Record)
+*** 1. Lives on first sector 2. Limited to 2TB 4. Limited to 4 partitions
+** GPT (GUID (Global Unique Indentifyed) Partition Table)  
+*** 1. New 2. Stored in multiply location on drive 4. Practicaly unlimited drive size and partition number
+** BIOS (Basic input/output system)
+*** Only support MBR
+*** Sees MBR as a drive with a single MBR partition
+** UEFI (unified extensible firmware interface)
+*** Native GPT support
+*** Usually need to run in legacy mode to support MBR
+** sudo fdisk /dev/sda (DOS partition table)	 
+** sudo gdisk /dev/sda (DOS/GPT partition table)
+* Formatting partition in Linux
+** Extended File System
+*** ext2
+**** Max partition 32Tb
+**** No journal
+**** used with usb, lower write action
+*** ext3
+**** Max partition 32Tb
+**** Journal
+*** ext4
+**** Max partiotion 1EB
+**** Journal
+**** Speed exhaused
+** Other filesystems
+*** Btrfs - snapshots, compression, auto defray
+*** RaiserFS - very space efficent with small files
+*** XFS - good for large partitions, getting  outmoded
+*** NTFS - Microsoft
+*** FAT32 - Microsoft
+*** ZFS, JFS, Reiser4 ,HFS+
+** Non-filesystem
+*** Swap = Pagefile
+*** can actually use a file
+*** usually an entire partition
+* Mount and unmounting
+** mount device location
+** umount location || umount device
+** /etc/fstab
+*** mounts on boot
+*** can specify user mode

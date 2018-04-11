@@ -1,0 +1,52 @@
+#+TITLE: LINUX IN REAL WORLD
+#+AUTHOR: Mobius
+#+EMAIL: amalinov30@gmail.com
+#+DATE: 2017-07-18
+
+* Network configuration
+** Public  IPs
+*** Live on the Internet
+**** routers and firewalls
+*** Cost money (ISP)
+*** Home use? Dynamic DNS?
+** Private Networks
+*** Class C -> 192.168.x.x (256)
+*** Class B -> 172.16-31.x.x (16)
+*** Class A -> 10.x.x.x (1)
+** Static
+*** Manual addressing
+*** Servers
+** Dynamic (DHCP)
+*** Dynamic addressing 10.10.10.1 -200
+** Static DHCP
+*** assigned by server, based on rules you set
+** Configure network
+*** Linux sudo nano -w /etc/network
+    iface eth0 inet static
+    address 192.168.1.30
+    netmask 255.255.255.0
+    gateway 192.168.1.1
+*** CentOS su; nano /etc/sysconfig/network-scripts
+    DEVICE="eth0"
+    BOOTPROTO=none
+    NM_CONTROLLED="no"
+    ONBOOT="yes"
+    TYPE="Ethernet"
+    NETWORK=192.168.1.0
+    NETMASK=255.255.255.0
+    IPADDR=192.168.1.31
+** Bonding
+*** *0 - balance-rr LB/FT
+*** 1 - active-backup FT
+*** *2 - balance-xor LB/FT
+*** 3 - broadcast FT
+*** *4 - 802.3ad LB/FT
+*** 5 - balance-tlb LB/FT
+*** 6 - balasce-alb LB/FT
+*** LB = load balance; FT = fatt tolmnic; * = need switch support
+* DHCP
+** nano /etc/dhcp/dhcpd.conf
+*** authoritative - main dhcp server
+*** 
+* DNS
+** 
